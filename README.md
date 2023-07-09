@@ -18,6 +18,59 @@ A injeção de dependência é uma forma comum de implementar a inversão de con
 
 A inversão de controle e a injeção de dependência têm como objetivo reduzir o acoplamento, melhorar a testabilidade, promover a reutilização e facilitar a manutenção do código. Esses princípios são amplamente utilizados em padrões de design e frameworks modernos de desenvolvimento de software.
 
+```csharp
+using System;
+
+namespace SolidExample
+{
+    class Program
+    {
+        static void Main()
+        {
+            var logger = new ConsoleLogger();
+            var calculator = new Calculator(logger);
+
+            var result = calculator.Add(5, 7);
+            Console.WriteLine($"The sum is: {result}");
+
+            Console.ReadLine();
+        }
+    }
+
+    interface ILogger
+    {
+        void Log(string message);
+    }
+
+    class ConsoleLogger : ILogger
+    {
+        public void Log(string message)
+        {
+            Console.WriteLine(message);
+        }
+    }
+
+    class Calculator
+    {
+        private readonly ILogger _logger;
+
+        public Calculator(ILogger logger)
+        {
+            _logger = logger;
+        }
+
+        public int Add(int a, int b)
+        {
+            var result = a + b;
+            _logger.Log($"Sum: {a} + {b} = {result}");
+
+            return result;
+        }
+    }
+}
+
+```
+
 ## Livro
 ![Livro](https://m.media-amazon.com/images/I/51YTqGVOD7L._SY425_.jpg)
 
